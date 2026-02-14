@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
 using System.ComponentModel;
+using System.ComponentModel.Design.Serialization;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -54,6 +55,7 @@ namespace MidiApp.UIControls
         /// The hover image.
         /// </value>
         [Browsable(true), Category("MidiApp"), Description("Background image when mouse is hover")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Image HoverImage
         {
             get { return _hoverImage; }
@@ -67,6 +69,7 @@ namespace MidiApp.UIControls
         /// Down image.
         /// </value>
         [Browsable(true), Category("MidiApp"), Description("Background image when mouse is down")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Image DownImage
         {
             get { return _downImage; }

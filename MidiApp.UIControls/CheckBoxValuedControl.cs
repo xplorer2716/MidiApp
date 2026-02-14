@@ -17,6 +17,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using System;
+using System.ComponentModel;
+using System.ComponentModel.Design.Serialization;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -61,6 +63,7 @@ namespace MidiApp.UIControls
         /// <summary>
         /// pseudo-override of default Enabled property
         /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public new bool Enabled
         {
             get
@@ -114,6 +117,7 @@ namespace MidiApp.UIControls
         /// <summary>
         /// 1 = checked; 0 = unchecked
         /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public int Value
         {
             get
@@ -126,6 +130,7 @@ namespace MidiApp.UIControls
             }
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public int Minimum
         {
             get
@@ -139,6 +144,7 @@ namespace MidiApp.UIControls
             }
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public int Maximum
         {
             get
@@ -152,6 +158,7 @@ namespace MidiApp.UIControls
             }
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public int Step
         {
             get

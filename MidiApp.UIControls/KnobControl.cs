@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Design.Serialization;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
@@ -188,6 +189,7 @@ namespace MidiApp.UIControls
         /// <summary>
         /// minimal value
         /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public int Minimum
         {
             get
@@ -222,6 +224,7 @@ namespace MidiApp.UIControls
         /// <summary>
         /// maximal value
         /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public int Maximum
         {
             get
@@ -300,6 +303,7 @@ namespace MidiApp.UIControls
         /// <summary>
         /// step increment
         /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public int Step
         {
             get
@@ -316,6 +320,7 @@ namespace MidiApp.UIControls
         /// <summary>
         /// return the current value of the control
         /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public int Value
         {
             get
@@ -346,11 +351,13 @@ namespace MidiApp.UIControls
         /// <summary>
         /// Rotating mode
         /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public EnumRotatingMode RotatingMode { get; set; }
 
         /// <summary>
         /// Knob style
         /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public EnumKnobStyle KnobStyle
         {
             get
@@ -371,6 +378,7 @@ namespace MidiApp.UIControls
         /// <value>
         /// The predefined values.
         /// </value>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public int[] PredefinedValues
         {
             get

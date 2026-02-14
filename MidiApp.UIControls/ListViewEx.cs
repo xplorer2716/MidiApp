@@ -17,6 +17,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 using System;
+using System.ComponentModel;
+using System.ComponentModel.Design.Serialization;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -129,6 +131,7 @@ namespace MidiApp.UIControls
         /// <summary>
         /// Is a double click required to start editing a cell?
         /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public bool DoubleClickActivation
         {
             get { return _doubleClickActivation; }

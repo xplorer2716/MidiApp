@@ -18,6 +18,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.Design.Serialization;
 using System.Linq;
 using System.Resources;
 using System.Windows.Forms;
@@ -180,6 +182,7 @@ namespace MidiApp.UIControls
 
         #region IValuedControl Membres
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public int Value
         {
             get
@@ -223,6 +226,7 @@ namespace MidiApp.UIControls
             }
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public int Minimum
         {
             get
@@ -236,6 +240,7 @@ namespace MidiApp.UIControls
             }
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public int Maximum
         {
             get
@@ -249,6 +254,7 @@ namespace MidiApp.UIControls
             }
         }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public int Step
         {
             get

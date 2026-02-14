@@ -18,6 +18,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using MidiApp.MidiController.Controller;
 using Sanford.Multimedia.Midi.UI.Windows;
+using System.ComponentModel;
+using System.ComponentModel.Design.Serialization;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -45,6 +47,7 @@ namespace MidiApp.MidiController.View
         /// <value>
         /// The color of the note on.
         /// </value>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Color NoteOnColor
         {
             get

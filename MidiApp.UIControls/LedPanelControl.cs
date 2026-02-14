@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Design.Serialization;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -76,6 +77,7 @@ namespace MidiApp.UIControls
         /// Gets the led colors.
         /// </summary>
         [Browsable(true), Category("MidiApp"), Description(" LED colors")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public List<Color> LedColors
         {
             get
@@ -88,6 +90,7 @@ namespace MidiApp.UIControls
         /// Gets the led states.
         /// </summary>
         [Browsable(true), Category("MidiApp"), Description(" LED states (true=on, false = off)")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public List<bool> LedStates
         {
             get
@@ -100,9 +103,11 @@ namespace MidiApp.UIControls
         /// Defines the led colors when led are off
         /// </summary>
         [Browsable(true), Category("MidiApp"), Description(" Led OFF color")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Color LedOffColor { get; set; }
 
         [Browsable(true), Category("MidiApp"), Description(" Led Border color")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Color LedBorderColor { get; set; }
 
         /// <summary>
