@@ -29,6 +29,13 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <AssemblyTitle>Xplorer</AssemblyTitle>
+    <AssemblyCompany>Xplorer</AssemblyCompany>
+    <AssemblyProduct>Xplorer</AssemblyProduct>
+    <AssemblyVersion>2012.5.8.3</AssemblyVersion>
+    <FileVersion>2012.5.8.3</FileVersion>
+    <InformationalVersion>XplorerData</InformationalVersion>
+    <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <OutputPath>bin\x86\Debug\</OutputPath>

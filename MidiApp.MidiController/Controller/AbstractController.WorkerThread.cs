@@ -41,8 +41,17 @@ namespace MidiApp.MidiController.Controller
         // the worker thread for dequeuing messages
         private Thread _workerThread = null;
 
-        // Ajout d'un champ pour signaler l'arrêt du thread
+        // stop the worker thread
         private volatile bool _workerThreadStopRequested = false;
+
+        /// <summary>
+        /// Gets a value indicating whether a request has been made to stop the worker thread.
+        /// </summary>
+        /// <remarks>Use this property to determine if the worker thread should cease its operations. This
+        /// is typically checked within long-running or background tasks to support cooperative cancellation and ensure
+        /// a graceful shutdown.</remarks>
+        protected bool IsWorkerThreadStopRequested => _workerThreadStopRequested;
+
 
         /// <summary>
         /// starts the enqueuing/dequeuing worker thread
@@ -79,6 +88,9 @@ namespace MidiApp.MidiController.Controller
                 if (!_workerThread.Join(2000))
                 {
                     // Le thread ne s'est pas arrêté dans les 2 secondes, on peut loguer ou ignorer
+                    int stopby = 0;
+                    stopby++;
+
                 }
                 _workerThread = null;
             }
@@ -88,7 +100,7 @@ namespace MidiApp.MidiController.Controller
         {
             try
             {
-                while (!_workerThreadStopRequested)
+                while (!IsWorkerThreadStopRequested)
                 {
                     //wait for transmission delay to elapse
                     Thread.Sleep(this._parameterTransmitDelay);
