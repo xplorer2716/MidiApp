@@ -45,84 +45,86 @@ namespace MidiApp.UIControls
         /// <param name="control">The control.</param>
         public void GetBackGroundImage(/* in/out */Control control)
         {
-            // do not recreate background bitmap if already generated
-            if (_backgroundBitmap != null)
-            {
-                UIService.DisposeIfNotNull(_backgroundBitmap);
-            }
+
+            UIService.DisposeIfNotNull(_backgroundBitmap);
+            
 
             Control parentControl = control.Parent;
 
-            if (parentControl != null)
+            if (parentControl is null) return;
+
+            Point location = Point.Empty;
+
+            Image sourceBackgroundImage = null;
+            if (parentControl.BackgroundImage != null)
             {
-                Point location = Point.Empty;
+                // parent's one
+                sourceBackgroundImage = parentControl.BackgroundImage;
+                location = control.Location;
+            }
+            else if (parentControl.BackColor == Color.Magenta && parentControl.Parent != null && parentControl.Parent.BackgroundImage != null)
+            {
+                // grandma's one; I know I should go up until no parent is available, but who cares, I know what I need
+                sourceBackgroundImage = parentControl.Parent.BackgroundImage;
+                location = new Point(parentControl.Location.X + control.Location.X, parentControl.Location.Y + control.Location.Y);
+            }
 
-                Image sourceBackgroundImage = null;
-                if (parentControl.BackgroundImage != null)
+            if (sourceBackgroundImage != null)
+            {
+                UIService.DisposeIfNotNull(_backgroundBitmap);
+                RectangleF sourceRectangle = control.ClientRectangle;
+                _backgroundBitmap = new Bitmap((int)sourceRectangle.Width, (int)sourceRectangle.Height);
+
+                // background graphics
+                using (Graphics graphicsBackground = Graphics.FromImage(_backgroundBitmap))
                 {
-                    // parent's one
-                    sourceBackgroundImage = parentControl.BackgroundImage;
-                    location = control.Location;
+                    float ratioX, ratioY;
+
+                    // Parent.BackgroundImage to get resolution
+                    //using (Bitmap sourceBitmap = new Bitmap(sourceBackgroundImage))
+                    //{
+                    //    ratioX = sourceBitmap.HorizontalResolution / _backgroundBitmap.HorizontalResolution;
+                    //    ratioY = sourceBitmap.VerticalResolution / _backgroundBitmap.VerticalResolution;
+                    //}
+                    // no need to create a bitmap, we can get resolution from image
+                    ratioX = sourceBackgroundImage.HorizontalResolution / _backgroundBitmap.HorizontalResolution;
+                    ratioY = sourceBackgroundImage.VerticalResolution / _backgroundBitmap.VerticalResolution;
+
+
+                    // compute parent stretch ratio, since background image has original size, we can compute the ratio
+                    float stretchRatioHeight = 1F / (float)parentControl.ClientSize.Height * (float)sourceBackgroundImage.Height;
+                    float stretchRatioWidth = 1F / (float)parentControl.ClientSize.Width * (float)sourceBackgroundImage.Width;
+
+                    // destination rectangle on the client part of the control
+                    RectangleF destRectangle = new RectangleF(0, 0, sourceRectangle.Width, sourceRectangle.Height);
+
+                    // resize source rectangle depending on bitmap resolution and parentcontrol client size (stretch)
+                    sourceRectangle.X = location.X * stretchRatioWidth;
+                    sourceRectangle.Y = location.Y * stretchRatioHeight;
+                    sourceRectangle.Height = sourceRectangle.Height * ratioY * stretchRatioHeight;
+                    sourceRectangle.Width = sourceRectangle.Width * ratioX * stretchRatioWidth;
+
+                    //copy bitmap and set it as background
+                    graphicsBackground.DrawImage(sourceBackgroundImage, destRectangle, sourceRectangle, GraphicsUnit.Pixel);
+                    control.BackgroundImage = _backgroundBitmap;
+                } //using
+            }// if (sourceBackgroundImage != null)
+            else
+            {
+                // fill brackground with background color
+                UIService.DisposeIfNotNull(_backgroundBitmap);
+                RectangleF sourceRectangle = control.ClientRectangle;
+                _backgroundBitmap = new Bitmap((int)sourceRectangle.Width, (int)sourceRectangle.Height);
+
+                // background graphics
+                using (Graphics graphicsBackground = Graphics.FromImage(_backgroundBitmap))
+                using (SolidBrush brush = new SolidBrush(control.BackColor))
+                {
+                    graphicsBackground.FillRectangle(brush, sourceRectangle);
                 }
-                else if (parentControl.BackColor == Color.Magenta && parentControl.Parent != null && parentControl.Parent.BackgroundImage != null)
-                {
-                    // grandma's one; I know I should go up until no parent is available, but who cares, I know what I need
-                    sourceBackgroundImage = parentControl.Parent.BackgroundImage;
-                    location = new Point(parentControl.Location.X + control.Location.X, parentControl.Location.Y + control.Location.Y);
-                }
-
-                if (sourceBackgroundImage != null)
-                {
-                    UIService.DisposeIfNotNull(_backgroundBitmap);
-                    RectangleF sourceRectangle = control.ClientRectangle;
-                    _backgroundBitmap = new Bitmap((int)sourceRectangle.Width, (int)sourceRectangle.Height);
-
-                    // background graphics
-                    using (Graphics graphicsBackground = Graphics.FromImage(_backgroundBitmap))
-                    {
-                        float ratioX, ratioY;
-
-                        // Parent.BackgroundImage to get resolution
-                        using (Bitmap sourceBitmap = new Bitmap(sourceBackgroundImage))
-                        {
-                            ratioX = sourceBitmap.HorizontalResolution / _backgroundBitmap.HorizontalResolution;
-                            ratioY = sourceBitmap.VerticalResolution / _backgroundBitmap.VerticalResolution;
-                        }
-                        // compute parent stretch ratio, since background image has original size, we can compute the ratio
-                        float stretchRatioHeight = 1F / (float)parentControl.ClientSize.Height * (float)sourceBackgroundImage.Height;
-                        float stretchRatioWidth = 1F / (float)parentControl.ClientSize.Width * (float)sourceBackgroundImage.Width;
-
-                        // destination rectangle on the client part of the control
-                        RectangleF destRectangle = new RectangleF(0, 0, sourceRectangle.Width, sourceRectangle.Height);
-
-                        // resize source rectangle depending on bitmap resolution and parentcontrol client size (stretch)
-                        sourceRectangle.X = location.X * stretchRatioWidth;
-                        sourceRectangle.Y = location.Y * stretchRatioHeight;
-                        sourceRectangle.Height = sourceRectangle.Height * ratioY * stretchRatioHeight;
-                        sourceRectangle.Width = sourceRectangle.Width * ratioX * stretchRatioWidth;
-
-                        //copy bitmap and set it as background
-                        graphicsBackground.DrawImage(sourceBackgroundImage, destRectangle, sourceRectangle, GraphicsUnit.Pixel);
-                        control.BackgroundImage = _backgroundBitmap;
-                    } //using
-                }// if (sourceBackgroundImage != null)
-                else
-                {
-                    // fill brackground with background color
-                    UIService.DisposeIfNotNull(_backgroundBitmap);
-                    RectangleF sourceRectangle = control.ClientRectangle;
-                    _backgroundBitmap = new Bitmap((int)sourceRectangle.Width, (int)sourceRectangle.Height);
-
-                    // background graphics
-                    using (Graphics graphicsBackground = Graphics.FromImage(_backgroundBitmap))
-                    using (SolidBrush brush = new SolidBrush(control.BackColor))
-                    {
-                        graphicsBackground.FillRectangle(brush, sourceRectangle);
-                    }
-                }
-            } // if (parentControl!=null)
-        }
-
+            }
+        } // if (parentControl!=null)
+        
         #region IDisposable Membres
 
         private bool _disposed;
