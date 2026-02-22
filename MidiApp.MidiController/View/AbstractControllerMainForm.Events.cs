@@ -105,7 +105,7 @@ namespace MidiApp.MidiController.View
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="eventArg"></param>
-        protected virtual void OnAutomationParameterChange(object sender, AbstractController.ParameterChangeEventArgs eventArg)
+        public virtual void OnAutomationParameterChange(object sender, AbstractController.ParameterChangeEventArgs eventArg)
         {
             // retrieve the registered control from parameter name
             Control control = null;
